@@ -9,9 +9,6 @@ jobs:
   run-scraper:
     runs-on: ubuntu-latest
 
-    env:
-      PLAYWRIGHT_BROWSERS_PATH: 0   # garante que Python encontra o Chromium
-
     steps:
       - name: Baixar repositório
         uses: actions/checkout@v3
@@ -25,18 +22,23 @@ jobs:
         run: |
           pip install -r kadence_scraper/requirements.txt
 
-      - name: Instalar Chromium do Playwright
+      - name: Instalar navegadores Playwright (NodeJS)
         run: |
           npx playwright install chromium --with-deps
 
-      - name: Rodar scraper
+      - name: Instalar navegadores Playwright (Python)
         run: |
-          python kadence_scraper/main.py
+          python -m playwright install chromium
 
-      - name: Commit & Push CSV
+      - name: Rodar scraper e salvar logs
+        run: |
+          python kadence_scraper/main.py | tee execucao.txt
+
+      - name: Commit & Push CSV e Logs
         run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
           git add kadence_scraper/data/corridas.csv
-          git commit -m "Atualização automática do CSV" || echo "✅ Nenhuma mudança detectada"
+          git add execucao.txt
+          git commit -m "Atualização automática do CSV e logs" || echo "✅ Nenhuma mudança detectada"
           git push || echo "📌 Nada para enviar"
