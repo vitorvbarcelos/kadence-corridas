@@ -1,0 +1,35 @@
+name: Atualizar Corridas
+
+on:
+  schedule:
+    - cron: "0 9 */2 * *"   # Roda às 09:00 UTC, dia sim e dia não
+  workflow_dispatch:        # Permite rodar manualmente no GitHub
+
+jobs:
+  run-scraper:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Baixar repositório
+        uses: actions/checkout@v3
+
+      - name: Configurar Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      - name: Instalar dependências
+        run: |
+          pip install -r kadence_scraper/requirements.txt
+
+      - name: Rodar scraper
+        run: |
+          python kadence_scraper/main.py
+
+      - name: Commit & Push CSV
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add kadence_scraper/data/corridas.csv
+          git commit -m "Atualização automática do CSV"
+          git push
