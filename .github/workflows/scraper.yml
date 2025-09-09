@@ -31,5 +31,5 @@ jobs:
           git config user.name "github-actions"
           git config user.email "actions@github.com"
           git add kadence_scraper/data/corridas.csv
-          git commit -m "Atualização automática do CSV"
-          git push
+          git commit -m "Atualização automática do CSV" || echo "✅ Nenhuma mudança detectada"
+          git push || echo "📌 Nada para enviar"
