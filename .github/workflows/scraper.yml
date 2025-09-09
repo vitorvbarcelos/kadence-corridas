@@ -7,7 +7,7 @@ on:
 
 jobs:
   run-scraper:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest   # pode manter no mais recente agora
 
     steps:
       - name: Baixar repositório
@@ -22,8 +22,9 @@ jobs:
         run: |
           pip install -r kadence_scraper/requirements.txt
 
-      - name: Instalar Playwright e navegadores
-        uses: microsoft/playwright-github-action@v1
+      - name: Instalar navegadores Playwright (recomendado)
+        run: |
+          npx playwright install --with-deps
 
       - name: Rodar scraper
         run: |
