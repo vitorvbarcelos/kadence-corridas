@@ -1,14 +1,62 @@
-- name: Install required system dependencies
-  run: |
-    sudo apt-get update
-    sudo apt-get install -y \
-      libasound2t64 \
-      libatk-bridge2.0-0 \
-      libatk1.0-0 \
-      libdbus-1-3 \
-      libgdk-pixbuf2.0-0 \
-      libnspr4 \
-      libnss3 \
-      libx11-xcb1 \
-      libx264-dev \
-      libffi-dev
+name: Run Scraper
+
+on:
+  push:
+    branches:
+      - main  # A branch em que o workflow será disparado
+
+jobs:
+  scraper-job:
+    runs-on: ubuntu-20.04  # Utiliza a versão do Ubuntu 20.04, que é compatível com o Playwright
+
+    steps:
+    - name: Check out repository
+      uses: actions/checkout@v3  # Faz o checkout do repositório
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'  # Define a versão do Python (ajuste conforme necessário)
+
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y \
+          libasound2t64 \
+          libffi-dev \
+          libx264-dev \
+          libnss3 \
+          libatk-bridge2.0-0 \
+          libatk1.0-0 \
+          libgdk-pixbuf2.0-0 \
+          libnspr4 \
+          libx11-xcb1 \
+          libxcb1 \
+          libdbus-glib-1-2 \
+          libdrm2 \
+          libwayland-client0 \
+          libwayland-server0 \
+          libgtk-3-0 \
+          libgbm1 \
+          xdg-utils \
+          libdbus-1-3 \
+          libnss3
+        python -m pip install --upgrade pip  # Atualiza o pip
+        python -m pip install playwright  # Instala o Playwright
+        python -m playwright install --with-deps  # Instala as dependências do Playwright
+
+    - name: Run Scraper
+      run: |
+        python kadence_scraper/main.py  # Substitua pelo seu comando de execução do scraper
+        # Caso você queira salvar os logs ou o resultado da execução, pode adicionar o comando para redirecionar para um arquivo
+        # python kadence_scraper/main.py > execucao.txt  # Exemplo de redirecionamento para arquivo
+
+    - name: Commit changes (if necessary)
+      run: |
+        git config --global user.name "github-actions"
+        git config --global user.email "github-actions@github.com"
+        git add .
+        git commit -m "Atualização automática do CSV e logs"
+        git push origin main  # Envia as alterações para o repositório
+      env:
+        GH_TOKEN: ${{ secrets.GH_TOKEN }}  # Substituindo GITHUB_TOKEN por GH_TOKEN
