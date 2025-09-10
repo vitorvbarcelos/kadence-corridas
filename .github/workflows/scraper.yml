@@ -7,7 +7,7 @@ on:
 
 jobs:
   scraper-job:
-    runs-on: ubuntu-20.04  # Utiliza a versão do Ubuntu 20.04, que é compatível com o Playwright
+    runs-on: ubuntu-latest
 
     steps:
     - name: Check out repository
