@@ -28,7 +28,7 @@ jobs:
           python -m pip install playwright
           python -m playwright install --with-deps
 
-      - name: Instalar Dependências do Sistema
+      - name: Instalar Dependências do Sistema (Ajustado)
         run: |
           sudo apt-get update
           sudo apt-get install -y \
@@ -44,7 +44,9 @@ jobs:
             libxdamage1 \
             libxrandr2 \
             libgbm-dev \
-            libasound2
+            libasound2 \
+            libffi-dev \
+            libx264-155
 
       - name: Rodar scraper
         run: |
