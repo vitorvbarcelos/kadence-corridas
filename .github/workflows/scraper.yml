@@ -44,9 +44,9 @@ jobs:
             libxdamage1 \
             libxrandr2 \
             libgbm-dev \
-            libasound2 \
             libffi-dev \
-            libx264-155
+            libasound2 \
+            libx264-155  # Substituído por uma versão mais estável
 
       - name: Rodar scraper
         run: |
