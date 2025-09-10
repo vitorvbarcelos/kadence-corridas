@@ -186,7 +186,7 @@ def extrair_sympla(max_tentativas=3):
             print(f"🔎 Sympla - Tentativa {tentativa + 1}/{max_tentativas}")
             
             with sync_playwright() as p:
-                browser = p.chromium.launch(headless=False)
+                browser = p.chromium.launch(headless=True)
                 page = browser.new_page()
                 
                 # URL do Sympla para eventos de corrida
