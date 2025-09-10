@@ -151,7 +151,7 @@ def extrair_ticket_sports(max_tentativas=3):
             print(f"🎯 Processando {len(categorias)} categorias de distância...")
             
             with sync_playwright() as p:
-                browser = p.chromium.launch(headless=False)
+                browser = p.chromium.launch(headless=True)
                 page = browser.new_page()
                 
                 eventos_por_categoria = []
