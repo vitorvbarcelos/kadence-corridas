@@ -245,7 +245,7 @@ def extrair_even3(max_tentativas=3):
             print(f"🔎 Even3 - Tentativa {tentativa + 1}/{max_tentativas}")
             
             with sync_playwright() as p:
-                browser = p.chromium.launch(headless=False)
+                browser = p.chromium.launch(headless=True)
                 page = browser.new_page()
                 
                 url = "https://www.even3.com.br/eventos-online/saude-e-bem-estar/"
