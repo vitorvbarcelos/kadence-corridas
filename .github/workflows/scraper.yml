@@ -18,35 +18,9 @@ jobs:
         with:
           python-version: "3.10"
 
-      - name: Instalar dependências do Python
+      - name: Instalar dependências
         run: |
           pip install -r kadence_scraper/requirements.txt
-
-      - name: Instalar dependências do Playwright
-        run: |
-          # Instala o Playwright e as dependências do sistema necessárias
-          python -m pip install playwright
-          python -m playwright install --with-deps
-
-      - name: Instalar Dependências do Sistema (Ajustado)
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y \
-            libatk-bridge2.0-0 \
-            libatk1.0-0 \
-            libcups2 \
-            libdbus-1-3 \
-            libgdk-pixbuf2.0-0 \
-            libnspr4 \
-            libnss3 \
-            libx11-xcb1 \
-            libxcomposite1 \
-            libxdamage1 \
-            libxrandr2 \
-            libgbm-dev \
-            libffi-dev \
-            libasound2 \
-            libx264-dev  # Mudança para libx264-dev, que é mais comum
 
       - name: Rodar scraper
         run: |
