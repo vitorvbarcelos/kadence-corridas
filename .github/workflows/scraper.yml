@@ -46,7 +46,7 @@ jobs:
             libgbm-dev \
             libffi-dev \
             libasound2 \
-            libx264-155  # Substituído por uma versão mais estável
+            libx264-dev  # Mudança para libx264-dev, que é mais comum
 
       - name: Rodar scraper
         run: |
